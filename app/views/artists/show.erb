@@ -1,0 +1,8 @@
+<h1>THIS IS SHOW PAGE of ARTIST</h1>
+<h2><%=@artist.name%></h2>
+<h4>Songs:</h4>
+<ul>
+  <%@artist.songs.each do |song|%>
+    <li><%=song.name%></li>
+  <%end%>
+</ul>
