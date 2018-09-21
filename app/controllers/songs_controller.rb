@@ -22,12 +22,11 @@ class SongsController < ApplicationController
         # new_song.artist = artist
         new_song.update(artist: artist)
         genre_array = params[:song][:genre]
-        binding.pry
         genre_array.each do |genre|
             genre_instance = Genre.find_by(name: genre)
             SongGenre.create(song_id: new_song.id, genre_id: genre_instance.id)
         end
-
+        flash[:message] = "Successfully created song."
         redirect '/songs'
     end
 
@@ -46,6 +45,27 @@ class SongsController < ApplicationController
         erb :'/songs/show'
     end
 
+    get '/songs/:slug/edit' do 
+        slug = params[:slug]
+        @genres= Genre.all
+        @song = Song.find_by_slug(slug)
+        erb :'/songs/edit'
+    end
 
+    patch '/songs/:slug' do 
+        song = Song.find_by_slug(params[:slug])
+        genres = SongGenre.where(song_id: song.id)
+        genres.each do |genre|
+            genre.destroy
+        end
+        params[:song][:genre].each do |genre|
+            genre_instance = Genre.find_by(name: genre)
+            SongGenre.create(song_id: song.id, genre_id: genre_instance.id)
+        end
+        artist = Artist.find_or_create_by(name: params[:song][:artist])
+        song.update(artist_id: artist.id)
+        flash[:message] = "Successfully created song."
+        redirect "/songs/#{song.slug}"
+    end
 
 end
