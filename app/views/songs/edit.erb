@@ -1,0 +1,12 @@
+edit.erb
+<h1>Update Songs</h1>
+ 
+<form action="/songs/<%= @song.slug %>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">  
+  <p name="song[name]" value="<%= @song.name %>"></p>
+  <input name="song[artist]" placeholder="song artist" value="<%= @song.artist.name %>">
+  <% @genres.each do |genre| %>
+    <p><input type="checkbox" value="<%= genre.name %>" name="song[genre][]" <%= @song.genres.include?(genre) ? "checked" : "" %>><%= genre.name %></p>
+  <% end %>
+  <button>Update</button>
+</form>
