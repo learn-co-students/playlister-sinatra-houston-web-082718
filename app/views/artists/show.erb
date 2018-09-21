@@ -1,0 +1,6 @@
+<h2><%=@artist.name%></h2>
+<% @artist.songs.each do |song| %>
+ <%song_genre = SongGenre.find_by(song_id:song.id)%>
+  <p><a href = '/songs/<%=song.slug%>'><%=song.name%></a>
+    (<a href = '/genres/<%=song_genre.genre.name%>'><%=song_genre.genre.name%></a>)</p>
+<% end %>

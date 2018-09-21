@@ -1,0 +1,3 @@
+<h2><%=@song.name%></h2>
+<p>By <a href = '/artists/<%=@song.artist.id%>'><%=@song.artist.name%></a></p>
+<p>Genre: <a href = '/genres/<%=@song_genre.genre.name.downcase%>'><%=@song_genre.genre.name%></a></p>
